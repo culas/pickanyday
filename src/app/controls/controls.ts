@@ -5,6 +5,9 @@ import {Component, computed, input, output} from '@angular/core';
   template: `
     <section>
       <div>
+        <button (click)="set_to_today.emit()">{{ today }}</button>
+      </div>
+      <div>
         <button (click)="previous_month.emit()">&lt;</button>
         <button (click)="select_month.emit()">{{ month_name() }}</button>
         <button (click)="next_month.emit()">&gt;</button>
@@ -18,13 +21,12 @@ import {Component, computed, input, output} from '@angular/core';
   `,
   styles: [`
     section {
-      display: grid;
-      grid-template-columns: 3fr 1fr;
+      display: flex;
+      justify-content: space-between;
       gap: .5rem;
 
       div {
         display: flex;
-        justify-content: space-between;
         gap: .5rem;
         padding: .5rem;
         border: 1px solid lightgrey;
@@ -44,6 +46,13 @@ export class Controls {
   public readonly select_month = output<void>();
   public readonly select_year = output<void>();
 
+  public readonly set_to_today = output<void>();
+
   protected readonly year = computed(() => this.date().getUTCFullYear());
   protected readonly month_name = computed(() => this.date().toLocaleDateString(undefined, {month: 'long'}));
+
+  protected readonly today = new Intl.RelativeTimeFormat(undefined, {
+    style: 'narrow',
+    numeric: 'auto'
+  }).format(0, 'day');
 }

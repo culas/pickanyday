@@ -14,7 +14,7 @@ import {Controls} from './controls/controls';
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly date = signal(new Date(Date.UTC(2025, 10)));
+  protected readonly date = signal(new Date());
 
   protected change_month(offset: number) {
     this.date.update(date => {
@@ -37,5 +37,9 @@ export class App {
 
   protected previous_year() {
     this.change_month(-12);
+  }
+
+  protected set_to_today() {
+    this.date.set(new Date());
   }
 }
