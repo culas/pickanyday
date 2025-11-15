@@ -1,5 +1,5 @@
-import {Component, input, output} from '@angular/core';
-import {Week} from '../helpers/get_weeks_of_month';
+import {Component, computed, model} from '@angular/core';
+import {get_weeks_of_month} from '../helpers/get_weeks_of_month';
 
 @Component({
   selector: 'app-calendar',
@@ -8,7 +8,7 @@ import {Week} from '../helpers/get_weeks_of_month';
     <section>
       @for (week of weeks(); track week[0].getTime()) {
         @for (day of week; track day.getUTCDate()) {
-          <button (click)="select_day.emit(day)">
+          <button (click)="date.set(day)">
             {{ day.getUTCDate() }}
           </button>
         }
@@ -18,6 +18,7 @@ import {Week} from '../helpers/get_weeks_of_month';
   styleUrl: './calendar.css',
 })
 export class Calendar {
-  public readonly weeks = input.required<Week[]>();
-  public readonly select_day = output<Date>();
+  public readonly date = model.required<Date>();
+
+  protected readonly weeks = computed(() => get_weeks_of_month(this.date()));
 }
