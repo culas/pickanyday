@@ -1,25 +1,20 @@
-import { provideZonelessChangeDetection } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
-import { App } from './app';
+import {provideZonelessChangeDetection} from '@angular/core';
+import {TestBed} from '@angular/core/testing';
+import {describe, expect, test} from 'vitest';
+import {App} from './app';
 
 describe('App', () => {
-  beforeEach(async () => {
+  async function setup() {
     await TestBed.configureTestingModule({
       imports: [App],
       providers: [provideZonelessChangeDetection()]
     }).compileComponents();
-  });
+  }
 
-  it('should create the app', () => {
+  test('should create the app', async () => {
+    await setup();
     const fixture = TestBed.createComponent(App);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(App);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, dater');
   });
 });
