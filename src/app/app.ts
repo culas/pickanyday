@@ -1,11 +1,13 @@
 import {Component, computed, signal} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {get_weeks_of_month} from './helpers/get_week_of_date';
+import {Calendar} from './calendar/calendar';
+import {get_weeks_of_month} from './helpers/get_weeks_of_month';
 
 @Component({
   selector: 'app-root',
   imports: [
-    FormsModule
+    FormsModule,
+    Calendar
   ],
   templateUrl: './app.html',
   styleUrl: './app.css'

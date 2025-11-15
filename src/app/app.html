@@ -1,16 +1,8 @@
 <div class="calendar-controls">
   <button (click)="previous_month()">&lt;</button>
-  <input [(ngModel)]="month" type="number" min="0" max="11"/>
-  <input [(ngModel)]="year" type="number" min="1970" max="2999"/>
+  <button>{{ month() }}</button>
+  <button>{{ year() }}</button>
   <button (click)="next_month()">&gt;</button>
 </div>
 
-<div class="calendar-grid">
-  @for (week of weeks(); track week[0].getUTCDate()) {
-    @for (day of week; track day.getUTCDate()) {
-      <button>
-        {{ day.getUTCDate() }}
-      </button>
-    }
-  }
-</div>
+<app-calendar [weeks]="weeks()"/>
