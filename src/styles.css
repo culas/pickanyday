@@ -1,7 +1,12 @@
+html, body {
+  font-family: sans-serif;
+}
+
 button {
   border: 1px solid lightgrey;
   background-color: white;
   padding: .5rem;
+  font-size: 1rem;
 
   &:hover {
     cursor: pointer;
