@@ -1,8 +1,6 @@
-<div class="calendar-controls">
-  <button (click)="previous_month()">&lt;</button>
-  <button>{{ month() }}</button>
-  <button>{{ year() }}</button>
-  <button (click)="next_month()">&gt;</button>
-</div>
-
-<app-calendar [weeks]="weeks()"/>
+<main>
+  <app-controls [date]="date()"
+                (previous_month)="previous_month()"
+                (next_month)="next_month()"/>
+  <app-calendar [weeks]="weeks()"/>
+</main>

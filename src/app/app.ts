@@ -1,13 +1,15 @@
 import {Component, computed, signal} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {Calendar} from './calendar/calendar';
+import {Controls} from './controls/controls';
 import {get_weeks_of_month} from './helpers/get_weeks_of_month';
 
 @Component({
   selector: 'app-root',
   imports: [
     FormsModule,
-    Calendar
+    Calendar,
+    Controls
   ],
   templateUrl: './app.html',
   styleUrl: './app.css'
@@ -16,7 +18,8 @@ export class App {
   protected readonly month = signal(10);
   protected readonly year = signal(2025);
 
-  protected readonly weeks = computed(() => get_weeks_of_month(new Date(Date.UTC(this.year(), this.month()))));
+  protected readonly date = computed(() => new Date(Date.UTC(this.year(), this.month())));
+  protected readonly weeks = computed(() => get_weeks_of_month(this.date()));
 
   protected next_month() {
     this.month.update(month => {
