@@ -15,29 +15,29 @@ import {get_weeks_of_month} from './helpers/get_weeks_of_month';
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly month = signal(10);
-  protected readonly year = signal(2025);
-
-  protected readonly date = computed(() => new Date(Date.UTC(this.year(), this.month())));
+  protected readonly date = signal(new Date(Date.UTC(2025, 10)));
   protected readonly weeks = computed(() => get_weeks_of_month(this.date()));
 
-  protected next_month() {
-    this.month.update(month => {
-      const new_month = (month + 1) % 12;
-      if (new_month === 0) {
-        this.year.update(year => year + 1);
-      }
-      return new_month;
+  protected change_month(offset: number) {
+    this.date.update(date => {
+      date.setUTCMonth(date.getUTCMonth() + offset);
+      return new Date(date);
     });
   }
 
+  protected next_month() {
+    this.change_month(1);
+  }
+
   protected previous_month() {
-    this.month.update(month => {
-      const new_month = (month + 11) % 12;
-      if (new_month === 11) {
-        this.year.update(year => year - 1);
-      }
-      return new_month;
-    });
+    this.change_month(-1)
+  }
+
+  protected next_year() {
+    this.change_month(12);
+  }
+
+  protected previous_year() {
+    this.change_month(-12);
   }
 }
