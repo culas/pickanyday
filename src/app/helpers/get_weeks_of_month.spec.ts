@@ -2,56 +2,86 @@ import {describe, expect, test} from 'vitest';
 import {get_weeks_of_month} from './get_weeks_of_month';
 
 describe('get_weeks_of_month', () => {
-  test('should return all weeks with days of november 2025', () => {
-    const weeks = get_weeks_of_month(new Date(Date.UTC(2025, 10, 14)));
+  test.each([
+    [0, full_year_2025.slice(0, 5)],
+    [1, full_year_2025.slice(4, 9)],
+    [2, full_year_2025.slice(8, 14)],
+    [3, full_year_2025.slice(13, 18)],
+    [4, full_year_2025.slice(17, 22)],
+    [5, full_year_2025.slice(21, 27)],
+    [6, full_year_2025.slice(26, 31)],
+    [7, full_year_2025.slice(30, 35)],
+    [8, full_year_2025.slice(35, 40)],
+    [9, full_year_2025.slice(39, 44)],
+    [10, full_year_2025.slice(43, 48)],
+    [11, full_year_2025.slice(48)],
+  ])('should return all weeks with days of month %i', (month, expected) => {
+    const weeks = get_weeks_of_month(new Date(Date.UTC(2025, month, 1)));
 
     const days = weeks.map(week => week.map(date => date.getUTCDate()));
-    expect(days).toEqual([
-      [27, 28, 29, 30, 31, 1, 2],
-      [3, 4, 5, 6, 7, 8, 9],
-      [10, 11, 12, 13, 14, 15, 16],
-      [17, 18, 19, 20, 21, 22, 23],
-      [24, 25, 26, 27, 28, 29, 30]
-    ])
+    expect(days).toEqual(expected);
   });
 
-  test('should return all weeks with days of january 2026', () => {
-    const weeks = get_weeks_of_month(new Date(Date.UTC(2026, 0, 1)));
+  test('should return correct weeks on the 31st', () => {
+    const weeks = get_weeks_of_month(new Date(Date.UTC(2025, 4, 31)));
 
     const days = weeks.map(week => week.map(date => date.getUTCDate()));
-    expect(days).toEqual([
-      [29, 30, 31, 1, 2, 3, 4],
-      [5, 6, 7, 8, 9, 10, 11],
-      [12, 13, 14, 15, 16, 17, 18],
-      [19, 20, 21, 22, 23, 24, 25],
-      [26, 27, 28, 29, 30, 31, 1]
-    ])
-  });
-
-  test('should return all weeks with days of february 2026', () => {
-    const weeks = get_weeks_of_month(new Date(Date.UTC(2026, 1, 14)));
-
-    const days = weeks.map(week => week.map(date => date.getUTCDate()));
-    expect(days).toEqual([
-      [26, 27, 28, 29, 30, 31, 1],
-      [2, 3, 4, 5, 6, 7, 8],
-      [9, 10, 11, 12, 13, 14, 15],
-      [16, 17, 18, 19, 20, 21, 22],
-      [23, 24, 25, 26, 27, 28, 1]
-    ])
-  });
-
-  test('should return all weeks with days of march 2026 with six weeks', () => {
-    const weeks = get_weeks_of_month(new Date(Date.UTC(2026, 2, 14)));
-
-    const days = weeks.map(week => week.map(date => date.getUTCDate()));
-    expect(days).toEqual([
-      [23, 24, 25, 26, 27, 28, 1],
-      [2, 3, 4, 5, 6, 7, 8],
-      [9, 10, 11, 12, 13, 14, 15],
-      [16, 17, 18, 19, 20, 21, 22],
-      [23, 24, 25, 26, 27, 28, 29],
-      [30, 31, 1, 2, 3, 4, 5]
-    ])
+    expect(days).toEqual(full_year_2025.slice(17, 22));
   });
 });
+
+const full_year_2025 = [
+  [30, 31, 1, 2, 3, 4, 5], // 0 january: 0
+  [6, 7, 8, 9, 10, 11, 12],
+  [13, 14, 15, 16, 17, 18, 19],
+  [20, 21, 22, 23, 24, 25, 26],
+  [27, 28, 29, 30, 31, 1, 2], // 1 february: 4
+  [3, 4, 5, 6, 7, 8, 9],
+  [10, 11, 12, 13, 14, 15, 16],
+  [17, 18, 19, 20, 21, 22, 23],
+  [24, 25, 26, 27, 28, 1, 2], // 2 march: 8
+  [3, 4, 5, 6, 7, 8, 9],
+  [10, 11, 12, 13, 14, 15, 16],
+  [17, 18, 19, 20, 21, 22, 23],
+  [24, 25, 26, 27, 28, 29, 30],
+  [31, 1, 2, 3, 4, 5, 6], // 3 april: 13
+  [7, 8, 9, 10, 11, 12, 13],
+  [14, 15, 16, 17, 18, 19, 20],
+  [21, 22, 23, 24, 25, 26, 27],
+  [28, 29, 30, 1, 2, 3, 4], // 4 may: 17
+  [5, 6, 7, 8, 9, 10, 11],
+  [12, 13, 14, 15, 16, 17, 18],
+  [19, 20, 21, 22, 23, 24, 25],
+  [26, 27, 28, 29, 30, 31, 1], // 5 june: 21
+  [2, 3, 4, 5, 6, 7, 8],
+  [9, 10, 11, 12, 13, 14, 15],
+  [16, 17, 18, 19, 20, 21, 22],
+  [23, 24, 25, 26, 27, 28, 29],
+  [30, 1, 2, 3, 4, 5, 6], // 6 july: 26
+  [7, 8, 9, 10, 11, 12, 13],
+  [14, 15, 16, 17, 18, 19, 20],
+  [21, 22, 23, 24, 25, 26, 27],
+  [28, 29, 30, 31, 1, 2, 3], // 7 august: 30
+  [4, 5, 6, 7, 8, 9, 10],
+  [11, 12, 13, 14, 15, 16, 17],
+  [18, 19, 20, 21, 22, 23, 24],
+  [25, 26, 27, 28, 29, 30, 31],
+  [1, 2, 3, 4, 5, 6, 7], // 8 september: 35
+  [8, 9, 10, 11, 12, 13, 14],
+  [15, 16, 17, 18, 19, 20, 21],
+  [22, 23, 24, 25, 26, 27, 28],
+  [29, 30, 1, 2, 3, 4, 5], // 9 october: 39
+  [6, 7, 8, 9, 10, 11, 12],
+  [13, 14, 15, 16, 17, 18, 19],
+  [20, 21, 22, 23, 24, 25, 26],
+  [27, 28, 29, 30, 31, 1, 2], // 10 november: 43
+  [3, 4, 5, 6, 7, 8, 9],
+  [10, 11, 12, 13, 14, 15, 16],
+  [17, 18, 19, 20, 21, 22, 23],
+  [24, 25, 26, 27, 28, 29, 30],
+  [1, 2, 3, 4, 5, 6, 7], // 11 december: 48
+  [8, 9, 10, 11, 12, 13, 14],
+  [15, 16, 17, 18, 19, 20, 21],
+  [22, 23, 24, 25, 26, 27, 28],
+  [29, 30, 31, 1, 2, 3, 4]
+];
