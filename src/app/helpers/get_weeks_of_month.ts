@@ -34,6 +34,7 @@ function get_week_of_date(date: Date): Week {
 function get_last_day_of_month(date: Date): Date {
   const month = date.getUTCMonth();
   const last_of_month = new Date(date);
+  last_of_month.setUTCDate(1); // to make sure it's not overflowing when changing the month
   last_of_month.setUTCMonth(month + 1);
   last_of_month.setUTCDate(0); // 0 sets last day of previous month
   return last_of_month;
