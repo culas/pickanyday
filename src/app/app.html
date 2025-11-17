@@ -2,8 +2,17 @@
   <app-controls [date]="date()"
                 (set_to_today)="set_to_today()"
                 (previous_month)="previous_month()"
+                (select_month)="select_month()"
                 (next_month)="next_month()"
                 (previous_year)="previous_year()"
                 (next_year)="next_year()"/>
-  <app-calendar [(date)]="date"/>
+  @switch (mode()) {
+    @case ('calendar') {
+      <app-calendar [(date)]="date"/>
+    }
+    @case ('month') {
+      <app-month-selector [date]="date()" (set_month)="set_month($event)"/>
+    }
+  }
+  <p>{{ iso_date() }}</p>
 </main>
