@@ -34,7 +34,7 @@ jobs:
         run: pnpm install
 
       - name: Build app
-        run: pnpm run build
+        run: pnpm run build --base-href=/pickanyday/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
