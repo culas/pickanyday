@@ -4,7 +4,7 @@ import {Component, computed, input, output} from '@angular/core';
   selector: 'app-month-selector',
   template: `
     <section>
-      @for (month of months; track month.getTime()) {
+      @for (month of months(); track month.getTime()) {
         <button
           (click)="set_month.emit(month)"
           [class.active]="month.getUTCMonth() === date().getUTCMonth()"
