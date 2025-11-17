@@ -1,4 +1,4 @@
-import {Component, input, output} from '@angular/core';
+import {Component, computed, input, output} from '@angular/core';
 
 @Component({
   selector: 'app-month-selector',
@@ -31,11 +31,12 @@ export class MonthSelector {
   public readonly date = input.required<Date>();
   public readonly set_month = output<Date>();
 
-  protected readonly months: Date[] = new Array(12)
+  protected readonly months: Date[] = computed(() => new Array(12)
     .fill(this.date())
     .map((date, i) => {
       const new_date = new Date(date);
       new_date.setUTCMonth(i);
       return new_date;
-    });
+    })
+  );
 }
