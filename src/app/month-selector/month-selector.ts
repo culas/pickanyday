@@ -7,7 +7,7 @@ import {Component, computed, input, output} from '@angular/core';
       @for (month of months(); track month.getTime()) {
         <button
           (click)="set_month.emit(month)"
-          [class.active]="month.getUTCMonth() === date().getUTCMonth()"
+          [class.active]="month.getUTCMonth() === active_date().getUTCMonth() && month.getUTCFullYear() === active_date().getUTCFullYear()"
         >{{ month.toLocaleDateString(undefined, {month: 'long'}) }}
         </button>
       }
@@ -29,6 +29,7 @@ import {Component, computed, input, output} from '@angular/core';
 })
 export class MonthSelector {
   public readonly date = input.required<Date>();
+  public readonly active_date = input.required<Date>();
   public readonly set_month = output<Date>();
 
   protected readonly months = computed<Date[]>(() => new Array(12)

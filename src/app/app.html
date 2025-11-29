@@ -1,5 +1,5 @@
 <main>
-  <app-controls [date]="date()"
+  <app-controls [date]="displayed_date()"
                 (set_to_today)="set_to_today()"
                 (previous_month)="previous_month()"
                 (select_month)="select_month()"
@@ -8,10 +8,10 @@
                 (next_year)="next_year()"/>
   @switch (mode()) {
     @case ('calendar') {
-      <app-calendar [(date)]="date"/>
+      <app-calendar [month]="displayed_date()" [(active_date)]="date"/>
     }
     @case ('month') {
-      <app-month-selector [date]="date()" (set_month)="set_month($event)"/>
+      <app-month-selector [date]="displayed_date()" [active_date]="date()" (set_month)="set_month($event)"/>
     }
   }
   <p>{{ iso_date() }}</p>
